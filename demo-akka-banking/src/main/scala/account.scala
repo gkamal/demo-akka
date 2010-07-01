@@ -34,8 +34,8 @@ class Account extends Transactor with Logging {
   private def withdraw(amount: Int) {
     val newValue = balanceValue - amount
     if (newValue < -10) {
-      log ifWarning "Account overdrawn! Aborting by throwing an OverdrawException."
-      throw new OverdrawException
+      log ifWarning "Account overdrawn! Aborting by throwing an IllegalStateException."
+      throw new IllegalStateException("OVERDRAWN") // This will NOT correctly rollback the transaction!
     }
     else {
       balance swap newValue
